@@ -1,0 +1,54 @@
+<div class="main-div">
+  <div class="login">
+    <div class="login-card mat-elevation-z8">
+      <img src="../../assets/logo.png" alt="" />
+      <div class="mat-h1">¡Bienvenido!</div>
+      <p class="caption">Sistema de gestión de proyectos</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required />
+          <mat-error *ngIf="loginForm.get('email')!.hasError('required')">
+            Email es obligatorio
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            formControlName="password"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            type="button"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')!.hasError('required')">
+            Contraseña es requerida
+          </mat-error>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="loginForm.invalid"
+          class="full-width"
+        >
+          Iniciar Sesión
+        </button>
+      </form>
+      <hr class="separation" />
+      <p class="text-center reset-pass" style="color: blue; cursor: pointer">
+        <a
+          routerLink="/create-account"
+          style="color: blue; text-decoration: none; font-size: 14px; font-weight: bold;"
+          >Crear Cuenta </a
+        >
+      </p>
+    </div>
+  </div>
+</div>

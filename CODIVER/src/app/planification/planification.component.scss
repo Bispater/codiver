@@ -1,0 +1,82 @@
+.container-fluid {
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+h1,
+h3,
+h4,
+h5,
+p,
+mat-panel-title {
+  text-align: center;
+  color: #031a80;
+}
+
+.mat-expansion-panel {
+  margin-top: 20px;
+}
+
+.mat-panel-title {
+  font-weight: bold;
+}
+
+.custom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-col {
+  flex: 1;
+  text-align: center;
+}
+
+.fix {
+  width: 100%;
+  height: 70px;
+}
+
+.toggle-button {
+  background-color: #1e88e5; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.toggle-button:hover {
+  background-color: #1565c0; 
+  transform: scale(1.05); 
+}
+
+.toggle-button:active {
+  background-color: #0d47a1; 
+  transform: scale(0.95);
+}
+
+.signature-box {
+  height: 105px; 
+  resize: none;
+}
+
+.btn-print {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,946 @@
+<div class="container-fluid">
+  <!-- Título -->
+  <div class="row">
+    <div class="col-12">
+      <h1>
+        FORMULARIO HPT<br />
+        HOJA DE PLANIFICACIÓN DE TRABAJOS<br />
+        CONTRATISTAS y SERVICIOS
+      </h1>
+    </div>
+  </div>
+
+  <!-- Subtítulo -->
+  <div class="row">
+    <div class="col-12">
+      <h4>Subgerencia Seguridad y Salud Ocupacional</h4>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-auto btn-print">
+      <button class="btn btn-primary ml-2" (click)="togglePanels()">
+        {{ expanded ? 'Colapsar Todo' : 'Expandir Todo' }}
+      </button>
+      <button class="btn btn-secondary ml-2" (click)="downloadDocument()">
+        Descargar
+      </button>
+      <button class="btn btn-primary ml-2" (click)="printDocument()">
+        Imprimir documento
+      </button>
+    </div>
+  </div>
+  
+
+  <!-- Expansion Panel para el Instructivo -->
+  <mat-expansion-panel expanded="{{expanded}}">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Instructivo Uso de HPT </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>
+      a) Formulario HPT debe hacerse obligatoriamente antes del inicio de un
+      trabajo, actividad o tarea.<br />
+      b) No se debe comenzar un trabajo si la HPT no está firmada por el
+      supervisor a cargo y por el supervisor que la aprueba.<br />
+      c) La duración máxima de la HPT es de una jornada diaria.<br />
+      d) Si el trabajo en el transcurso de la jornada diaria sufre cambios o se
+      realiza una nueva actividad, se debe hacer una nueva HPT.<br />
+      e) La HPT debe llenarse en terreno.<br />
+      f) El desarrollo de la HPT debe incluir la utilización de EPP,
+      identificación de peligros y medidas preventivas.<br />
+      g) La HPT debe ir acompañada con una charla de 5 minutos de todos los
+      involucrados en el trabajo.<br />
+    </p>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="{{expanded}}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        A.- Antecedentes del Trabajo a Realizar y Chequeo de Autorización
+        General
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha</mat-label>
+          <!-- Enlazar el FormControl a la entrada de fecha -->
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [formControl]="fechaControl"
+            type="date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Hora Inicio Trabajo</mat-label>
+          <input matInput [formControl]="horaInicioControl" type="time" />
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Hora Término Trabajo</mat-label>
+          <input matInput [formControl]="horaTerminoControl" type="time" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="fill" style="flex: 1">
+          <mat-label>Nombre empresa contratista o servicios</mat-label>
+          <input
+            matInput
+            [formControl]="nombreEmpresaControl"
+            [matAutocomplete]="autoEmpresas"
+          />
+          <mat-autocomplete #autoEmpresas="matAutocomplete">
+            <mat-option *ngFor="let empresa of empresas" [value]="empresa">
+              {{ empresa }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="fill" style="flex: 1">
+          <mat-label>Nombre supervisor contratista o servicio</mat-label>
+          <input
+            matInput
+            [formControl]="nombreSupervisorControl"
+            [matAutocomplete]="autoSupervisores"
+          />
+          <mat-autocomplete #autoSupervisores="matAutocomplete">
+            <mat-option
+              *ngFor="let supervisor of supervisores"
+              [value]="supervisor"
+            >
+              {{ supervisor }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="fill" style="flex: 1">
+          <mat-label>Nombre centro de trabajo</mat-label>
+          <input
+            matInput
+            [formControl]="nombreCentroTrabajoControl"
+            [matAutocomplete]="autoCentrosTrabajo"
+          />
+          <mat-autocomplete #autoCentrosTrabajo="matAutocomplete">
+            <mat-option *ngFor="let centro of centrosTrabajo" [value]="centro">
+              {{ centro }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="fill" style="flex: 1">
+          <mat-label>Nombre jefe o asistente Camanchaca</mat-label>
+          <input
+            matInput
+            [formControl]="nombreJefeAsistenteControl"
+            [matAutocomplete]="autoJefesAsistentes"
+          />
+          <mat-autocomplete #autoJefesAsistentes="matAutocomplete">
+            <mat-option *ngFor="let jefe of jefesAsistentes" [value]="jefe">
+              {{ jefe }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-9">
+        <mat-form-field appearance="fill" style="flex: 1">
+          <mat-label>Identificación de trabajo por realizar</mat-label>
+          <input matInput [formControl]="identificacionTrabajoControl" />
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <h3 style="display: inline-block; margin-right: 10px">
+          Trabajo Rutinario
+        </h3>
+        <mat-checkbox
+          [formControl]="trabajoRutinarioSI"
+          style="display: inline-block; margin-right: 10px"
+          >SI</mat-checkbox
+        >
+        <mat-checkbox
+          [formControl]="trabajoRutinarioNO"
+          style="display: inline-block"
+          >NO</mat-checkbox
+        >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label
+            >Lugar específico donde se realizará el trabajo :</mat-label
+          >
+          <textarea
+            matInput
+            [formControl]="descripcionTrabajoRealizar"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Breve descripción del trabajo a realizar :</mat-label>
+          <textarea
+            matInput
+            [formControl]="descripcionTrabajoControl"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Describir el Paso a Paso del trabajo : </mat-label>
+          <textarea
+            matInput
+            [formControl]="pasoAPasoControl"
+            rows="6"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="{{expanded}}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        B.- Equipo de Protección Requerido para el Trabajo (considera todos los
+        cargos). Marque
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="custom-row">
+      <!-- Primera fila -->
+      <div class="custom-col">
+        <label>
+          Casco con barbiquejo
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Guantes
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Arnés de seguridad
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Señalización/alarmas
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Bote auxiliar
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+
+    <div class="custom-row">
+      <!-- Segunda fila -->
+      <div class="custom-col">
+        <label>
+          Lentes y/o careta
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Zapatos/botas de seguridad
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Línea de Vida
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Medios de comunicación
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Barrera Dura
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+
+    <div class="custom-row">
+      <!-- Tercera fila -->
+      <div class="custom-col">
+        <label>
+          Protección auditiva
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Chaleco salvavidas
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Equipo soldador/oxicorte
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Botiquín / Equipos 1° auxilios
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Dispositivo/bloqueos
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+    <div class="custom-row">
+      <div class="custom-col">
+        <label>
+          Protección respiratoria
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Ropa térmica
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Traje contra agua o Químicos
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Conos y/o Letreros
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          Estación de Agua
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="{{expanded}}">
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        >C.- Identificación de Estándares de Control de Riesgos Críticos (ECRC).
+        Lista de Chequeo Previo al Trabajo. Marque</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+    <hr />
+    <div class="row">
+      <p>
+        <strong>NOTA:</strong> Estándares en construcción (aún no son
+        aplicables):<br />
+        - Navegación diurna/nocturna<br />
+        - Corte-Golpe con herramientas/elementos<br />
+        - Naufragio artefacto naval<br />
+        - Espacios confinados
+      </p>
+    </div>
+
+    <div class="custom-row">
+      <!-- Primera fila -->
+      <div class="custom-col">
+        <label>
+          1. Buceo
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          4. Caídas a distinto nivel
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+    <!-- Segunda fila -->
+    <div class="custom-row">
+      <div class="custom-col">
+        <label>
+          2. Izaje
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          5. Intervención equipos eléctricos
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+    <!-- Tercera fila -->
+    <div class="custom-row">
+      <div class="custom-col">
+        <label>
+          3. Liberación descontrolada de energía
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+      <div class="custom-col">
+        <label>
+          6. Atrapamiento
+          <mat-checkbox></mat-checkbox>
+        </label>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="{{expanded}}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        D.- Medidas Claves para la Ejecución del Trabajo
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <hr />
+
+    <div class="row">
+      <div class="col-4">
+        <p>
+          1.- ¿Se cuenta y se anexa(n) listas de chequeo del estándares de
+          riesgos críticos según lo solicitado en punto “C” anterior?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta3Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta3No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-4">
+        <p>
+          2.- ¿Se cuenta con croquis del lugar donde se ejecutará el trabajo?
+          (ubicación exacta de equipos y maniobras)
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta3Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta3No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 1: Pregunta 3 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          3.- ¿Existe Procedimiento de trabajo específico para el trabajo o
+          tareas a realizar? Si es NO, debe hacer un Análisis de Riesgos del
+          Trabajo “ART”
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta3Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta3No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+    <!-- Fila 2: Pregunta 4 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          4.- Personal que intervendrá, ¿está capacitado y/o instruido en el
+          Procedimiento Específico de Trabajo y existen registros firmados que
+          así lo confirman?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta4Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta4No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 3: Pregunta 5 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          5.- ¿El paso a paso del trabajo o tareas están bien identificados y
+          evaluados en inventario de riesgos (Matriz)? Si es NO, debe hacer un
+          Análisis de Riesgos del Trabajo “ART”
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta5Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta5No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr />
+    <!-- Fila 4: Pregunta 6 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          6.- ¿El personal que participa, ¿está capacitado y/o instruido de los
+          alcances, riesgos y medidas de control de las tareas a desarrollar?
+          (Charla de 5 minutos antes de iniciar el trabajo)
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta6Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta6No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 5: Pregunta 7 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          7.- ¿El personal, conoce los Estándares de Control de Riesgos Críticos
+          de Salmones Camanchaca?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta7Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta7No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 6: Pregunta 8 -->
+    <div class="row">
+      <div class="col-4">
+        <p>8.- ¿Se cuenta con un supervisor para realizar el trabajo?</p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta8Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta8No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 7: Pregunta 9 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          9.- ¿El personal que intervendrá en el trabajo se encuentra en buena
+          condición física y psicológica?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta9Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta9No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 8: Pregunta 10 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          10.- ¿Se efectuaron las coordinaciones y comunicaciones con otras
+          áreas potencialmente afectadas?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta10Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta10No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion10"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel expanded="{{expanded}}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        E.- Identificación de Peligros / Riesgos Relevantes Complementarios
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <hr />
+
+    <div class="row">
+      <div class="col-4">
+        <p>
+          1. ¿En charla se incluyeron aspectos de emergencia (vías de acceso,
+          escape, sistemas de alarma, botes auxiliares u otros)?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta3Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta3No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-4">
+        <p>
+          2. Condiciones ambientales existentes, como: viento, lluvia, oleaje,
+          temperaturas, ¿pueden generar incidentes al personal?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta3Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta3No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 1: Pregunta 3 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          3. ¿Existe interacción entre equipos / embarcaciones y tránsito de
+          personas en el lugar?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta3Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta3No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+    <!-- Fila 2: Pregunta 4 -->
+    <div class="row">
+      <div class="col-4">
+        <p>4. Herramientas manuales por utilizar ¿están en buen estado?</p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta4Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta4No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 3: Pregunta 5 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          5. ¿Los equipos eléctricos a intervenir están desenergizado y
+          bloqueados?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta5Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta5No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr />
+    <!-- Fila 4: Pregunta 6 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          6. ¿Se dispone de personal capacitado para trabajar con sustancias
+          peligrosas químicas e inflamables?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta6Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta6No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 5: Pregunta 7 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          7. ¿Se cuenta con números de emergencias y equipo de comunicación
+          radial en la zona de trabajo?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta7Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta7No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 6: Pregunta 8 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          8. ¿Existen agentes susceptibles de generar enfermedades
+          profesionales?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta8Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta8No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 7: Pregunta 9 -->
+    <div class="row">
+      <div class="col-4">
+        <p>9. ¿Existe señalización adecuada para el desarrollo del trabajo?</p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta9Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta9No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Fila 8: Pregunta 10 -->
+    <div class="row">
+      <div class="col-4">
+        <p>
+          10. ¿Balsa salvavidas, pirotecnia y equipos de respuesta ante
+          emergencias, se encuentran operativos y vigentes?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta10Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta10No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion10"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+<hr>
+    <div class="row">
+      <div class="col-4">
+        <p>
+          11. ¿Extintores para el combate y lucha conta incendios, se encuentran presurizados y vigentes?
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox [(ngModel)]="respuesta10Si">Sí</mat-checkbox>
+        <mat-checkbox [(ngModel)]="respuesta10No">No</mat-checkbox>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="fill">
+          <mat-label>N/A (Justificar) / Controles Adicionales</mat-label>
+          <textarea matInput [(ngModel)]="justificacion10"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</div>
+
+
+<mat-expansion-panel expanded="{{expanded}}">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      F.- Registro de Toma de Conocimiento de la HPT (Todos los que intervienen en el trabajo)
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center">Nº</th>
+          <th class="text-center">Nombre del trabajador</th>
+          <th class="text-center">RUT</th>
+          <th class="text-center">Empresa</th>
+          <th class="text-center">Firma</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of tableData; let i = index">
+          <td class="text-center">{{ i + 1 }}</td>
+          <td><input type="text" class="form-control" [(ngModel)]="row.nombre" /></td>
+          <td><input type="text" class="form-control" [(ngModel)]="row.rut" /></td>
+          <td><input type="text" class="form-control" [(ngModel)]="row.empresa" /></td>
+          <td><input type="text" class="form-control" [(ngModel)]="row.firma" /></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4">
+    <p class="font-weight-bold">
+      Declaro que he sido informado de la planificación del trabajo, sus riesgos y los respectivos controles
+    </p>
+  </div>
+
+  <!-- Recuadros grandes en una sola fila -->
+  <div class="row mt-4">
+    <div class="col-4">
+      <label class="font-weight-bold d-block">
+        Nombre y firma del supervisor contratista a <br>cargo del trabajo:
+      </label>
+      <textarea class="form-control signature-box" [(ngModel)]="supervisorContratista"></textarea>
+    </div>
+    <div class="col-4">
+      <label class="font-weight-bold d-block">
+        Nombre y firma del supervisor CAMANCHACA que aprueba HPT y sus medidas de control:
+      </label>
+      <textarea class="form-control signature-box" [(ngModel)]="supervisorCamanchaca"></textarea>
+    </div>
+    <div class="col-4">
+      <label class="font-weight-bold d-block">Fecha elaboración: 03/11/2022</label>
+      <label class="d-block">Fecha revisión:</label>
+      <input type="date" class="form-control mb-2" [(ngModel)]="fechaRevision" />
+      <label class="d-block">Versión:</label>
+      <input type="text" class="form-control" [(ngModel)]="version" placeholder="V.1" />
+    </div>
+  </div>
+
+</mat-expansion-panel>

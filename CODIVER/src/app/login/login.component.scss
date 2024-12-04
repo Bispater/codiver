@@ -1,0 +1,72 @@
+.full-width {
+  width: 100%;
+}
+
+.main-div {
+    display: block; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: #163251; 
+    height: 100% !important;
+  }
+  
+  
+  .logo {
+    position: absolute;
+    width: 100%; 
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .login {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-card {
+      width: 500px;
+      padding: 40px;
+      text-align: center;
+      background-color: white;
+      border-radius: 10px;
+  
+      img {
+        width: 300px; 
+        margin-bottom: 60px;
+      }
+    }
+    
+    .img-logo {
+      width: 100px;
+      position: absolute;
+      top: 20px;
+    }
+  
+    .mat-h1 {
+      color: #194F7F;
+      font-weight: bold;
+      font-size: 45px;
+    }
+    
+    .caption {
+      font-weight: 200;
+      font-style: italic;
+      margin-bottom: 60px;
+    }
+    
+    .separation {
+      padding: 0px 20px 10px 10px;
+    }
+    
+    .mat-form-field {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    
+    .reset-pass {
+      margin-top: 15px;
+    }
+    

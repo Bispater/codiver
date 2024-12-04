@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">
+        <img src="../../assets/logo.png" alt="Logo" />
+      </div>
+      <ul class="menu">
+        <li>
+          <a routerLink="/home/planification" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Planificación</a>
+        </li>
+        <li>
+          <a routerLink="/home/binnacle" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Bitácora</a>
+        </li>
+      </ul>
+      
+    </div>
+  
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <router-outlet></router-outlet> 
+    </div>
+  </div>
+  
